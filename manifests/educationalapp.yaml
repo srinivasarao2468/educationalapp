@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: educationalapp
+spec:
+  selector:
+    matchLabels:
+      app: educationalapp
+  template:
+    metadata:
+      labels:
+        app: educationalapp
+    spec:
+      containers:
+      - name: educationalapp
+        image: educationalapp:v1
+        env:
+        - name: USERNAME
+          value: mongoadmin
+        - name: PASSWORD
+          value: secret
+        - name: HOST
+          value: mongoadmin
+        - name: PORT
+          value: 27017
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 4000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: educationalapp
+spec:
+  selector:
+    app: educationalapp
+  ports:
+  - port: 4000
+    targetPort: 4000

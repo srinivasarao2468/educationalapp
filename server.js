@@ -19,7 +19,7 @@ var methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 mongoose
   .connect(
-    "mongodb+srv://prasanthreddy:prasanth@cluster0.5nurpjx.mongodb.net/?retryWrites=true&w=majority"
+    `mongodb://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.PORT}/?retryWrites=true&w=majority`
   )
   .then(() => {
     console.log("db connected....");
@@ -28,7 +28,7 @@ mongoose
     console.error("Error connecting to database:", error);
   });
   const store= new mongodbSession({
-    uri:'mongodb+srv://prasanthreddy:prasanth@cluster0.5nurpjx.mongodb.net/?retryWrites=true&w=majority',
+    uri:`mongodb://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.PORT}/?retryWrites=true&w=majority`,
     collection:'sessions'
   })
   app.use(session({
