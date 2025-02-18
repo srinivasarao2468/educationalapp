@@ -10,7 +10,7 @@ iam:
 
 nodeGroups:
 - name: educationalapp-ng
-  instanceType: m5.large
+  instanceType: t3.medium
   desiredCapacity: 2
   minSize: 1
   maxSize: 2
