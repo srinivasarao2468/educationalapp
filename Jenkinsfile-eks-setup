@@ -1,0 +1,12 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Setup eks cluster') {
+            steps {
+                sh "eksctl create cluster -f eksctl-config/cluster-config.yaml"
+            }
+        }
+
+    }
+}
