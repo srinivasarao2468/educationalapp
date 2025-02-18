@@ -1,0 +1,23 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: educationalapp-cluster
+  region: us-east-1
+  version: '1.28'
+iam:
+  withOIDC: true
+
+nodeGroups:
+- name: educationalapp-ng
+  instanceType: m5.large
+  desiredCapacity: 2
+  minSize: 1
+  maxSize: 2
+  volumeSize: 30
+  labels: { role: worker }
+  tags: { nodegroup: worker }
+  iam:
+    withAddonPolicies:
+      externalDNS: true
+      certManager: true

@@ -1,38 +1,47 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongoDB
+  name: mongodb
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: mongoDB
+      app: mongodb
   template:
     metadata:
       labels:
-        app: mongoDB
+        app: mongodb
     spec:
       containers:
-      - name: mongoDB
+      - name: mongodb
         image: mongo
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
-          value: mongoadmin
+          valueFrom:
+            secretKeyRef:
+              name: educationalapp
+              key: username
         - name: MONGO_INITDB_ROOT_PASSWORD
-          value: secret
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+          valueFrom:
+            secretKeyRef:
+              name: educationalapp
+              key: password
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
         ports:
         - containerPort: 27017
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongoDB
+  name: mongodb
 spec:
   selector:
-    app: mongoDB
+    app: mongodb
   ports:
   - port: 27017
     targetPort: 27017
+
+# mongodb.default.svc.cluster.local
